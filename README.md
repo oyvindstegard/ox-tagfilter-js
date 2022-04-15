@@ -1,5 +1,7 @@
 # Dynamic tag filtering in org-mode exported HTML documents
 
+![Screencast](screencast.gif?raw=true)
+
 ## Usage
 
 Include script in exported HTML documents by adding the following Org-mode
