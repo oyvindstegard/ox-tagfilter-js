@@ -1,0 +1,43 @@
+# -*- mode: org; coding: utf-8; -*-
+#+TITLE: Org export tag filter test document
+#+HTML_HEAD_EXTRA: <script src="ox-tagfilter.js"></script>
+#+OPTIONS: H:2 toc:nil
+#+STARTUP: show3levels
+
+* First heading                                                       :first:
+First heading *content*.
+** Sub heading of first heading                                        :sub:
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Quis varius quam quisque id diam
+vel quam. Nunc sed augue lacus viverra vitae congue. Non tellus orci ac auctor
+augue mauris. In mollis nunc sed id semper risus in hendrerit gravida. In nulla
+posuere sollicitudin aliquam ultrices. Neque gravida in fermentum et
+sollicitudin ac. Augue interdum velit euismod in pellentesque massa. Eget mauris
+pharetra et ultrices neque ornare.
+* Second heading                                             :second:sublist:
+Content.
+
+List:
+- Sub list:
+  - a
+  - b
+  - c
+- End of list.
+* Third heading                                                       :third:
+** Sub heading of third heading.                                       :sub:
+Accumsan lacus vel facilisis volutpat est. Nunc congue nisi vitae suscipit
+tellus mauris a diam. Nullam non nisi est sit amet. Quam quisque id diam vel
+quam elementum. Egestas erat imperdiet sed euismod nisi. Massa sapien faucibus
+et molestie ac feugiat. Nunc scelerisque viverra mauris in aliquam sem fringilla
+ut morbi.
+*** Level 3 heading – here be dragons                              :dragon:
+#+begin_export html
+<span style="font-size: 5em">&#128009;</span>
+#+end_export
+* Fourth heading                                                     :fourth:
+** Sub fourth                                                        :table:
+| a | b | c |
+|---+---+---|
+| 1 | 0 | 0 |
+| 0 | 1 | 0 |
+| 0 | 0 | 1 |
