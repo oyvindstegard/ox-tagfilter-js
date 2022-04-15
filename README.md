@@ -2,7 +2,7 @@
 
 ## Screencast
 
-> ![Screencast](screencast.gif?raw=true)
+![Screencast](screencast.gif?raw=true)
 
 ## Usage
 
