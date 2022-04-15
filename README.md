@@ -1,5 +1,7 @@
 # Dynamic tag filtering in org-mode exported HTML documents
 
+## Screencast
+
 ![Screencast](screencast.gif?raw=true)
 
 ## Usage
