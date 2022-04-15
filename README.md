@@ -1,5 +1,9 @@
 # Dynamic tag filtering in org-mode exported HTML documents
 
+Let's you filter your Org-mode exported HTML document dynamically using heading
+tags present in org file. May be useful for large documents like journals when
+looking for some specific content.
+
 ## Screencast
 
 ![Screencast](screencast.gif?raw=true)
