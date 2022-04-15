@@ -2,6 +2,7 @@
 #+TITLE: Org export tag filter test document
 #+HTML_HEAD_EXTRA: <script src="ox-tagfilter.js"></script>
 #+OPTIONS: H:2 toc:nil
+#+LANGUAGE: en
 #+STARTUP: show3levels
 
 * First heading                                                       :first:
