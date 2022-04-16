@@ -1,9 +1,10 @@
 # Dynamic tag filtering in org-mode exported HTML documents
 
-This JavaScript code adds dynamic tag filtering to your Org-mode exported HTML
-documents. It allows to hide/reveal page content based on tags and may be useful
-for larger documents like journals, all-in-one notes files, etc. Of course, it
-will not be useful at all if you are not using any tags in your org files.
+This JavaScript code adds dynamic tag filtering to HTML documents exported from
+Emacs [Org-mode](https://orgmode.org/). It allows to hide/reveal page content
+based on tags and may be useful for larger documents like journals, all-in-one
+notes files, etc. Of course, it will not be useful at all if you are not using
+any tags in your org files.
 
 Author's use case: I have a growing journal of notes which is automatically
 published as HTML to a private web space. When looking back at stuff or looking
