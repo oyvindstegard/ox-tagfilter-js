@@ -1,8 +1,14 @@
 # Dynamic tag filtering in org-mode exported HTML documents
 
-Let's you filter your Org-mode exported HTML document dynamically using heading
-tags present in org file. May be useful for large documents like journals when
-looking for some specific content.
+This JavaScript code adds dynamic tag filtering to your Org-mode exported HTML
+documents. It allows to hide/reveal page content based on tags and may be useful
+for larger documents like journals, all-in-one notes files, etc. Of course, it
+will not be useful at all if you are not using any tags in your org files.
+
+Author's use case: I have a growing journal of notes which is automatically
+published as HTML to a private web space. When looking back at stuff or looking
+for something specific, I find it useful to be able to filter the page to
+specific tags (and hide the rest).
 
 ## Screencast
 
@@ -10,7 +16,7 @@ looking for some specific content.
 
 ## Usage
 
-Include script in exported HTML documents by adding the following Org-mode
+Include the script in exported HTML documents by adding the following Org-mode
 line to your org files:
 
     #+HTML_HEAD_EXTRA: <script src="https://cdn.jsdelivr.net/gh/oyvindstegard/ox-tagfilter-js/ox-tagfilter.js"></script>
