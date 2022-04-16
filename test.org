@@ -1,7 +1,7 @@
 # -*- mode: org; coding: utf-8; -*-
 #+TITLE: Org export tag filter test document
 #+HTML_HEAD_EXTRA: <script src="ox-tagfilter.js"></script>
-#+OPTIONS: H:2 toc:nil
+#+OPTIONS: H:2 toc:2
 #+LANGUAGE: en
 #+STARTUP: show3levels
 
