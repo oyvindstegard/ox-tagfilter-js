@@ -1,12 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-04-15 fr. 17:43 -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 2022-05-01 sø. 22:39 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Org export tag filter test document</title>
-<meta name="generator" content="Org mode">
-<meta name="author" content="Øyvind Stegard">
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Øyvind Stegard" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -246,35 +248,43 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org439fb2b">1. First heading&#xa0;&#xa0;&#xa0;<span class="tag"><span class="first">first</span></span></a>
+<li><a href="#org2a1f9a5">1. First heading&#xa0;&#xa0;&#xa0;<span class="tag"><span class="first">first</span></span></a>
 <ul>
-<li><a href="#orgb60f851">1.1. Sub heading of first heading&#xa0;&#xa0;&#xa0;<span class="tag"><span class="sub">sub</span></span></a></li>
+<li><a href="#org1a2d0a4">1.1. Sub heading of first heading&#xa0;&#xa0;&#xa0;<span class="tag"><span class="2nd">2nd</span></span></a></li>
 </ul>
 </li>
-<li><a href="#orga519051">2. Second heading&#xa0;&#xa0;&#xa0;<span class="tag"><span class="second">second</span>&#xa0;<span class="sublist">sublist</span></span></a></li>
-<li><a href="#org6a48eee">3. Third heading&#xa0;&#xa0;&#xa0;<span class="tag"><span class="third">third</span></span></a>
+<li><a href="#org96b3e1f">2. Second heading&#xa0;&#xa0;&#xa0;<span class="tag"><span class="second">second</span>&#xa0;<span class="sublist">sublist</span></span></a></li>
+<li><a href="#org5f7b54b">3. Third heading&#xa0;&#xa0;&#xa0;<span class="tag"><span class="third">third</span></span></a>
 <ul>
-<li><a href="#org04eebab">3.1. Sub heading of third heading.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="sub">sub</span></span></a></li>
+<li><a href="#org521f207">3.1. Sub heading of third heading.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="2nd">2nd</span></span></a></li>
 </ul>
 </li>
-<li><a href="#org33cf5d7">4. Fourth heading&#xa0;&#xa0;&#xa0;<span class="tag"><span class="fourth">fourth</span></span></a>
+<li><a href="#org8405c14">4. Fourth heading&#xa0;&#xa0;&#xa0;<span class="tag"><span class="fourth">fourth</span></span></a>
 <ul>
-<li><a href="#orge59d435">4.1. Sub fourth&#xa0;&#xa0;&#xa0;<span class="tag"><span class="table">table</span></span></a></li>
+<li><a href="#orgc943ce0">4.1. Sub fourth #1&#xa0;&#xa0;&#xa0;<span class="tag"><span class="2nd">2nd</span>&#xa0;<span class="foo">foo</span></span></a></li>
+<li><a href="#orge953d75">4.2. Sub fourth #2&#xa0;&#xa0;&#xa0;<span class="tag"><span class="table">table</span>&#xa0;<span class="2nd">2nd</span></span></a></li>
+</ul>
+</li>
+<li><a href="#org654cdd8">5. Tasks&#xa0;&#xa0;&#xa0;<span class="tag"><span class="tasks">tasks</span></span></a>
+<ul>
+<li><a href="#orgdbdc981">5.1. <span class="todo TODO">TODO</span> feed the dragon</a></li>
+<li><a href="#orgc13d588">5.2. <span class="todo FETCH">FETCH</span> the cat</a></li>
+<li><a href="#orgc3fc7d2">5.3. <span class="todo TODO">TODO</span> feed the cat</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org439fb2b" class="outline-2">
-<h2 id="org439fb2b"><span class="section-number-2">1</span> First heading&#xa0;&#xa0;&#xa0;<span class="tag"><span class="first">first</span></span></h2>
+<div id="outline-container-org2a1f9a5" class="outline-2">
+<h2 id="org2a1f9a5"><span class="section-number-2">1</span> First heading&#xa0;&#xa0;&#xa0;<span class="tag"><span class="first">first</span></span></h2>
 <div class="outline-text-2" id="text-1">
 <p>
 First heading <b>content</b>.
 </p>
 </div>
-<div id="outline-container-orgb60f851" class="outline-3">
-<h3 id="orgb60f851"><span class="section-number-3">1.1</span> Sub heading of first heading&#xa0;&#xa0;&#xa0;<span class="tag"><span class="sub">sub</span></span></h3>
+<div id="outline-container-org1a2d0a4" class="outline-3">
+<h3 id="org1a2d0a4"><span class="section-number-3">1.1</span> Sub heading of first heading&#xa0;&#xa0;&#xa0;<span class="tag"><span class="2nd">2nd</span></span></h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
@@ -285,11 +295,15 @@ posuere sollicitudin aliquam ultrices. Neque gravida in fermentum et
 sollicitudin ac. Augue interdum velit euismod in pellentesque massa. Eget mauris
 pharetra et ultrices neque ornare.
 </p>
+
+<p>
+Next paragraph.
+</p>
 </div>
 </div>
 </div>
-<div id="outline-container-orga519051" class="outline-2">
-<h2 id="orga519051"><span class="section-number-2">2</span> Second heading&#xa0;&#xa0;&#xa0;<span class="tag"><span class="second">second</span>&#xa0;<span class="sublist">sublist</span></span></h2>
+<div id="outline-container-org96b3e1f" class="outline-2">
+<h2 id="org96b3e1f"><span class="section-number-2">2</span> Second heading&#xa0;&#xa0;&#xa0;<span class="tag"><span class="second">second</span>&#xa0;<span class="sublist">sublist</span></span></h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Content.
@@ -309,12 +323,12 @@ List:
 </ul>
 </div>
 </div>
-<div id="outline-container-org6a48eee" class="outline-2">
-<h2 id="org6a48eee"><span class="section-number-2">3</span> Third heading&#xa0;&#xa0;&#xa0;<span class="tag"><span class="third">third</span></span></h2>
+<div id="outline-container-org5f7b54b" class="outline-2">
+<h2 id="org5f7b54b"><span class="section-number-2">3</span> Third heading&#xa0;&#xa0;&#xa0;<span class="tag"><span class="third">third</span></span></h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org04eebab" class="outline-3">
-<h3 id="org04eebab"><span class="section-number-3">3.1</span> Sub heading of third heading.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="sub">sub</span></span></h3>
+<div id="outline-container-org521f207" class="outline-3">
+<h3 id="org521f207"><span class="section-number-3">3.1</span> Sub heading of third heading.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="2nd">2nd</span></span></h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Accumsan lacus vel facilisis volutpat est. Nunc congue nisi vitae suscipit
@@ -325,30 +339,39 @@ ut morbi.
 </p>
 </div>
 <ol class="org-ol">
-<li><a id="org9ef0e27"></a>Level 3 heading – here be dragons&#xa0;&#xa0;&#xa0;<span class="tag"><span class="dragon">dragon</span></span><br>
+<li><a id="org01edfbe"></a>Level 3 heading – here be dragons&#xa0;&#xa0;&#xa0;<span class="tag"><span class="dragon">dragon</span></span><br />
 <div class="outline-text-4" id="text-3-1-1">
+<br>
 <span style="font-size: 5em">&#128009;</span>
 </div>
 </li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org33cf5d7" class="outline-2">
-<h2 id="org33cf5d7"><span class="section-number-2">4</span> Fourth heading&#xa0;&#xa0;&#xa0;<span class="tag"><span class="fourth">fourth</span></span></h2>
+<div id="outline-container-org8405c14" class="outline-2">
+<h2 id="org8405c14"><span class="section-number-2">4</span> Fourth heading&#xa0;&#xa0;&#xa0;<span class="tag"><span class="fourth">fourth</span></span></h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-orge59d435" class="outline-3">
-<h3 id="orge59d435"><span class="section-number-3">4.1</span> Sub fourth&#xa0;&#xa0;&#xa0;<span class="tag"><span class="table">table</span></span></h3>
+<div id="outline-container-orgc943ce0" class="outline-3">
+<h3 id="orgc943ce0"><span class="section-number-3">4.1</span> Sub fourth #1&#xa0;&#xa0;&#xa0;<span class="tag"><span class="2nd">2nd</span>&#xa0;<span class="foo">foo</span></span></h3>
 <div class="outline-text-3" id="text-4-1">
-<table>
+<p>
+Next sibling heading contains a table.
+</p>
+</div>
+</div>
+<div id="outline-container-orge953d75" class="outline-3">
+<h3 id="orge953d75"><span class="section-number-3">4.2</span> Sub fourth #2&#xa0;&#xa0;&#xa0;<span class="tag"><span class="table">table</span>&#xa0;<span class="2nd">2nd</span></span></h3>
+<div class="outline-text-3" id="text-4-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
-<col  class="org-right">
+<col  class="org-right" />
 
-<col  class="org-right">
+<col  class="org-right" />
 
-<col  class="org-right">
+<col  class="org-right" />
 </colgroup>
 <thead>
 <tr>
@@ -380,10 +403,45 @@ ut morbi.
 </div>
 </div>
 </div>
+<div id="outline-container-org654cdd8" class="outline-2">
+<h2 id="org654cdd8"><span class="section-number-2">5</span> Tasks&#xa0;&#xa0;&#xa0;<span class="tag"><span class="tasks">tasks</span></span></h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-orgdbdc981" class="outline-3">
+<h3 id="orgdbdc981"><span class="section-number-3">5.1</span> <span class="todo TODO">TODO</span> feed the dragon</h3>
+</div>
+<div id="outline-container-orgc13d588" class="outline-3">
+<h3 id="orgc13d588"><span class="section-number-3">5.2</span> <span class="todo FETCH">FETCH</span> the cat</h3>
+</div>
+<div id="outline-container-orgc3fc7d2" class="outline-3">
+<h3 id="orgc3fc7d2"><span class="section-number-3">5.3</span> <span class="todo TODO">TODO</span> feed the cat</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+When mouse is fed and birds are fed.
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="orgb52fbdb"></a><span class="todo TODO">TODO</span> fill bird feeder&#xa0;&#xa0;&#xa0;<span class="tag"><span class="cooking">cooking</span></span><br />
+<div class="outline-text-4" id="text-5-3-1">
+<p>
+Sunflower seeds are fine.
+</p>
+</div>
+</li>
+<li><a id="org6abbb4b"></a><span class="done DONE">DONE</span> feed the mouse&#xa0;&#xa0;&#xa0;<span class="tag"><span class="cooking">cooking</span></span><br />
+<div class="outline-text-4" id="text-5-3-2">
+<p>
+Cheese on the menu.
+</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Øyvind Stegard</p>
-<p class="date">Created: 2022-04-15 fr. 17:43</p>
+<p class="date">Created: 2022-05-01 sø. 22:39</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

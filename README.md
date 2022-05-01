@@ -2,18 +2,21 @@
 
 This JavaScript code adds dynamic tag filtering to HTML documents exported from
 Emacs [Org-mode](https://orgmode.org/). It allows to hide/reveal page content
-based on tags and may be useful for larger documents like journals, all-in-one
-notes files, etc. Of course, it will not be useful at all if you are not using
-any tags in your org files.
+based on tags and TODO-keywords, which may be useful for larger documents like
+journals, all-in-one notes files, etc. Of course, it will not be useful at all
+if you are not using any tags or TODO-keywords in your org files.
 
 Author's use case: I have a growing journal of notes which is automatically
 published as HTML to a private web space. When looking back at stuff or looking
 for something specific, I find it useful to be able to filter the page to
-specific tags (and hide the rest).
+specific content (and hide the rest).
 
 ## Screencast
 
 ![Screencast](screencast.gif?raw=true)
+
+The CSS for the screencast document can be found here:
+https://sandyuraz.com/blogs/orgmode-css/
 
 ## Usage
 
@@ -30,9 +33,13 @@ You may also copy the [`ox-tagfilter.js`](ox-tagfilter.js) file to your own
 hosting and change the URL as appropriate, if you dislike the dependency on
 jsdelivr.net.
 
-If the HTML document has exported tags in it, you should see all the tags appear
-as buttons on the top. Click those to filter the content dynamically. Press the
-<kbd>ESC</kbd> key to clear all selected tags and show all content.
+If the HTML document has exported tags or TODO-keywords in it, you should see
+the values appear as buttons on the top. Click those to filter the content
+dynamically. Press the <kbd>ESC</kbd> key to clear all selected buttons and show
+all content.
+
+As you filter the content, the set of available filters are reduced, so that you
+can avoid selecting combinations that match nothing.
 
 ## Demo (test documents)
 

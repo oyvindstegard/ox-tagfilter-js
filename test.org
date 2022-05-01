@@ -7,7 +7,7 @@
 
 * First heading                                                       :first:
 First heading *content*.
-** Sub heading of first heading                                        :sub:
+** Sub heading of first heading                                        :2nd:
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
 incididunt ut labore et dolore magna aliqua. Quis varius quam quisque id diam
 vel quam. Nunc sed augue lacus viverra vitae congue. Non tellus orci ac auctor
@@ -15,6 +15,8 @@ augue mauris. In mollis nunc sed id semper risus in hendrerit gravida. In nulla
 posuere sollicitudin aliquam ultrices. Neque gravida in fermentum et
 sollicitudin ac. Augue interdum velit euismod in pellentesque massa. Eget mauris
 pharetra et ultrices neque ornare.
+
+Next paragraph.
 * Second heading                                             :second:sublist:
 Content.
 
@@ -25,7 +27,7 @@ List:
   - c
 - End of list.
 * Third heading                                                       :third:
-** Sub heading of third heading.                                       :sub:
+** Sub heading of third heading.                                       :2nd:
 Accumsan lacus vel facilisis volutpat est. Nunc congue nisi vitae suscipit
 tellus mauris a diam. Nullam non nisi est sit amet. Quam quisque id diam vel
 quam elementum. Egestas erat imperdiet sed euismod nisi. Massa sapien faucibus
@@ -33,12 +35,24 @@ et molestie ac feugiat. Nunc scelerisque viverra mauris in aliquam sem fringilla
 ut morbi.
 *** Level 3 heading – here be dragons                              :dragon:
 #+begin_export html
+<br>
 <span style="font-size: 5em">&#128009;</span>
 #+end_export
 * Fourth heading                                                     :fourth:
-** Sub fourth                                                        :table:
+** Sub fourth #1                                                   :2nd:foo:
+Next sibling heading contains a table.
+** Sub fourth #2                                                 :table:2nd:
 | a | b | c |
 |---+---+---|
 | 1 | 0 | 0 |
 | 0 | 1 | 0 |
 | 0 | 0 | 1 |
+* Tasks                                                               :tasks:
+** TODO [#A] feed the dragon
+** FETCH the cat
+** TODO feed the cat
+When mouse is fed and birds are fed.
+*** TODO fill bird feeder                                         :cooking:
+Sunflower seeds are fine.
+*** DONE feed the mouse                                             :cooking:
+Cheese on the menu.

@@ -1,6 +1,7 @@
 /* Generate tag filtering buttons for org-mode exported HTML documents. Allows
- * to dynamically filter an org-mode exported HTML document by tags, revealing
- * only content that matches the selected tags and hiding the rest.
+ * to dynamically filter an org-mode exported HTML document by tags and
+ * TODO-keywords, revealing only content that matches the selected items and
+ * hiding the rest.
  *
  * It filters both a generated table-of-contents (if present) and the content
  * itself.
@@ -13,14 +14,14 @@
 'use strict';
 
 const OXTF = {
-    version: '0.1'
+    version: '0.2'
 };
 
 /* Styles used. These are injected into DOM automatically. */
 OXTF.createStyleElement = () =>  {
     const styleElem = document.createElement('style');
     styleElem.innerText = `
-.oxtf-filter-list {}
+#oxtf-filter-list {}
 button.oxtf {
   font-family: monospace;
   font-weight: normal;
@@ -42,8 +43,8 @@ button.oxtf-active {
     return styleElem;
 };
 
-OXTF.invisibleClassName = 'oxtf-invisible';
-OXTF.tagsDataAttribute = 'oxtfTags';
+OXTF.invisibleClassName = 'oxtf-invisible'; // CSS class used to hide content
+OXTF.tagsDataAttribute = 'oxtfTags';        // data attr used for storing resolved tag sets in DOM
 
 /* Collects tags from org-mode exported HTML document.
    
@@ -54,35 +55,54 @@ OXTF.tagsDataAttribute = 'oxtfTags';
    Returns a Set of all found tags in document.
  */
 OXTF.collectTags = (contentRoot) => {
+
+    const isTodoSpan = (elem) => {
+        return elem.nodeType === Node.ELEMENT_NODE
+            && elem.nodeName === 'SPAN'
+            && (elem.classList.contains('todo') || elem.classList.contains('done'));
+    };
+
+    const isTagSpan = (elem) => {
+        return elem.nodeType === Node.ELEMENT_NODE
+            && elem.nodeName === 'SPAN'
+            && elem.classList.contains('tag');
+    };
+
+    const isHeadingOrAnchor = (elem) => {
+        return elem.nodeName === 'A' || elem.nodeName.match(/H[1-9]/);
+    };
+
     const collectSpanTags = (spanElem, tagSet) => {
-        for (let i=0; i<spanElem.childNodes.length; i++) {
-            const child = spanElem.childNodes[i];
-            if (child.nodeName !== 'SPAN') continue;
-            child.classList.forEach(className => {
-                if (className !== OXTF.invisibleClassName) {
-                    tagSet.add(className);
-                }
-            });
+        if (isTodoSpan(spanElem)) {
+            Array.from(spanElem.classList)
+                .filter(c => c !== 'todo' && c !== 'done' && c !== OXTF.invisibleClassName)
+                .forEach(c => tagSet.add(c));
+        } else if (isTagSpan(spanElem)) {
+            for (let i=0; i<spanElem.childNodes.length; i++) {
+                const child = spanElem.childNodes[i];
+                if (child.nodeName !== 'SPAN') continue;
+                child.classList.forEach(className => {
+                    if (className !== OXTF.invisibleClassName) {
+                        tagSet.add(className);
+                    }
+                });
+            }
         }
     };
 
     const documentTagValues = new Set();
 
-    contentRoot.querySelectorAll('span.tag').forEach(elem => {
+    contentRoot.querySelectorAll('span.tag, span.todo, span.done').forEach(elem => {
         let n = elem;
         const allTagValues = new Set();
         while (n && n.nodeType === Node.ELEMENT_NODE && n !== contentRoot) {
             for (let i=0; i<n.childNodes.length; i++) {
                 const child = n.childNodes[i];
-                if (child.nodeName === 'SPAN' && child.classList.contains('tag')) {
+                if (isTagSpan(child) || isTodoSpan(child)) {
                     collectSpanTags(child, allTagValues);
-                } else if (child.hasChildNodes()) {
+                } else if (isHeadingOrAnchor(child)) {
                     for (let j=0; j<child.childNodes.length; j++) {
-                        const grandchild = child.childNodes[j];
-                        if (grandchild.nodeName === 'SPAN'
-                            && grandchild.classList.contains('tag')) {
-                            collectSpanTags(grandchild, allTagValues);
-                        }
+                        collectSpanTags(child.childNodes[j], allTagValues);
                     }
                 }
             }
@@ -96,7 +116,11 @@ OXTF.collectTags = (contentRoot) => {
 };
 
 /* Accepts a Set of selected tags as argument. Reveals content that
-   matches all tags and hides the rest. */
+   matches all tags and hides the rest.
+
+   Returns a set of tags for the narrowed visible content or null if
+   all content is visible (no tags selected).
+*/
 OXTF.revealMatchingContent = (contentRoot, selectedTags) => {
     contentRoot.querySelectorAll('div#text-table-of-contents, div.outline-2')
         .forEach(topLevelContentNode => {
@@ -111,41 +135,52 @@ OXTF.revealMatchingContent = (contentRoot, selectedTags) => {
         });
     
     if (selectedTags.size === 0) {
-        return;
+        return null;
     }
 
-    contentRoot.querySelectorAll('span.tag')
-        .forEach(spanTagElem => {
-            const allTagValues = new Set(JSON.parse(spanTagElem.dataset[OXTF.tagsDataAttribute]));
+    const revealSubtree = (elem) => {
+        elem.classList.remove(OXTF.invisibleClassName);
+        elem.querySelectorAll('.' + OXTF.invisibleClassName)
+            .forEach(e => e.classList.remove(OXTF.invisibleClassName));
+    };
+
+    const visibleContentTags = new Set();
+
+    contentRoot.querySelectorAll('span.tag, span.todo, span.done')
+        .forEach(spanElem => {
+            const allTagValues = new Set(JSON.parse(spanElem.dataset[OXTF.tagsDataAttribute]));
             
-            let revealContent = true;
             for (let tag of selectedTags) {
                 if (!allTagValues.has(tag)) {
-                    revealContent = false;
-                    break;
+                    return;
                 }
             }
 
-            if (revealContent) {
-                spanTagElem.parentNode.parentNode.querySelectorAll('.' + OXTF.invisibleClassName)
-                    .forEach(e => e.classList.remove(OXTF.invisibleClassName));
-
-                let n = spanTagElem;
-                while (n && n.nodeType === Node.ELEMENT_NODE) {
-                    n.classList.remove(OXTF.invisibleClassName);
-                    if (n.firstElementChild
-                        && (n.firstElementChild.nodeName === 'A'
-                            || n.firstElementChild.nodeName.match(/H[1-9]/))) {
-                        n.firstElementChild.classList.remove(OXTF.invisibleClassName);
-                        const descendants = n.firstElementChild.getElementsByTagName('*');
-                        for (let i=0; i<descendants.length; i++) {
-                            descendants[i].classList.remove(OXTF.invisibleClassName);
-                        }
-                    }
-                    n = n.parentNode;
+            allTagValues.forEach(t => visibleContentTags.add(t));
+            
+            const heading = spanElem.closest('li,h1,h2,h3,h4,h5,h6,h7,h8,h9');
+            revealSubtree(heading);
+            if (heading.nodeName.match(/H[1-9]/)) {
+                let headingSibling = heading.nextElementSibling;
+                while (headingSibling) {
+                    revealSubtree(headingSibling);
+                    headingSibling = headingSibling.nextElementSibling;
                 }
+            }
+            
+            let n = heading.parentNode;
+            while (n && n.nodeType === Node.ELEMENT_NODE) {
+                n.classList.remove(OXTF.invisibleClassName);
+                if (n.firstElementChild
+                    && (n.firstElementChild.nodeName === 'A'
+                        || n.firstElementChild.nodeName.match(/H[1-9]/))) {
+                    revealSubtree(n.firstElementChild);
+                }
+                n = n.parentNode;
             }
         });
+
+    return visibleContentTags;
 };
 
 OXTF.init = (ev) => {
@@ -156,7 +191,7 @@ OXTF.init = (ev) => {
     const filterList = document.createElement('div');
     filterList.id = 'oxtf-filter-list';
 
-    documentTagSet.forEach(tagText => {
+    Array.from(documentTagSet).sort().forEach(tagText => {
         const button = document.createElement('button');
         button.classList.add('oxtf');
         button.innerText = tagText;
@@ -166,8 +201,15 @@ OXTF.init = (ev) => {
             buttonNode.classList.toggle('oxtf-active');
             const listNode = buttonNode.parentNode;
             const selectedTags = new Set(Array.from(listNode.querySelectorAll('button.oxtf-active'))
-                                    .map(e => e.innerText));
-            OXTF.revealMatchingContent(contentRoot, selectedTags);
+                                         .map(e => e.innerText));
+            const visibleContentTags = OXTF.revealMatchingContent(contentRoot, selectedTags);
+            listNode.childNodes.forEach(b => {
+                if (visibleContentTags === null || visibleContentTags.has(b.innerText)) {
+                    b.disabled = false;
+                } else {
+                    b.disabled = true;
+                }
+            });
         });
         
         filterList.append(button);
@@ -175,19 +217,19 @@ OXTF.init = (ev) => {
 
     // Finally hook into live DOM:
     document.getElementsByTagName('head').item(0).append(OXTF.createStyleElement());
-    if (document.querySelector('header')) {
-        document.querySelector('header').append(filterList); // HTML5
-    } else {
-        contentRoot.insertBefore(filterList, document.querySelector('h1.title').nextSibling); // XHTML
+    if (document.querySelector('header')) {  // HTML5:
+        document.querySelector('header').append(filterList);
+    } else {                                 // XHTML:
+        contentRoot.insertBefore(filterList, document.querySelector('h1.title').nextSibling);
     }
 
     // Add ESC key listener (clear all active tag filters).
     document.addEventListener('keyup', (ev) => {
         if (ev.keyCode === 27) {
-            document.getElementById('oxtf-filter-list')
-                .querySelectorAll('button.oxtf-active').forEach((button) => {
-                    button.classList.remove('oxtf-active');
-                });
+            filterList.childNodes.forEach(b => {
+                b.classList.remove('oxtf-active');
+                b.disabled = false;
+            });
             OXTF.revealMatchingContent(contentRoot, new Set());
         }
     });
