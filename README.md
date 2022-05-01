@@ -13,7 +13,7 @@ specific content (and hide the rest).
 
 ## Screencast
 
-![Screencast](screencast.gif?raw=true)
+<p align="center">![Screencast](screencast.gif?raw=true)</p>
 
 The CSS for the screencast document can be found here:
 https://sandyuraz.com/blogs/orgmode-css/
