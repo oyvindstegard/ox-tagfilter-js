@@ -65,7 +65,7 @@ doctype settings:
 - [test-ox-html5-fancy.html](https://htmlpreview.github.io/?https://github.com/oyvindstegard/ox-tagfilter-js/blob/main/test-ox-html5-fancy.html)
 - [test-ox-html5-notoc.html](https://htmlpreview.github.io/?https://github.com/oyvindstegard/ox-tagfilter-js/blob/main/test-ox-html5-notoc.html)
 - [test-ox-xhtml-strict.html](https://htmlpreview.github.io/?https://github.com/oyvindstegard/ox-tagfilter-js/blob/main/test-ox-xhtml-strict.html)
-
+- [text-ox-html5-existing-placeholder.html](https://htmlpreview.github.io/?https://github.com/oyvindstegard/ox-tagfilter-js/blob/main/text-ox-html5-existing-placeholder.html)
 
 ## Compatibility
 
