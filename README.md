@@ -45,15 +45,14 @@ can avoid selecting combinations that match nothing.
 
 If you don't like the default location of the filter buttons, this can be
 customized by inserting a placeholder `<div>`-tag anywhere you like in the
-exported HTML document. This can be achieved by using an HTML export block in
-the org source file:
+exported HTML document. You can include it with an HTML export block such as:
 
     #+BEGIN_EXPORT html
     <div id='oxtf-filter-list'/>
     #+END_EXPORT
 
-If such an element exists, the filter buttons will replace that particular one,
-instead of being injected at the top of the document.
+The filter buttons will replace that particular element, instead of being
+injected in the default location at the top of the document.
 
 ## Demo (test documents)
 
