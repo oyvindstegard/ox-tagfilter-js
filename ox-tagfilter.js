@@ -6,7 +6,7 @@
  * It filters both a generated table-of-contents (if present) and the content
  * itself.
  * 
- * Tested with: Org 9.5.2, Emacs 27.1.
+ * Tested with: Org 9.5.3 (Emacs 27.1 and Emacs 28.1)
  * Source code: https://github.com/oyvindstegard/ox-tagfilter-js/
  * Author:      Øyvind Stegard <oyvind@stegard.net>
  */
@@ -14,7 +14,7 @@
 'use strict';
 
 const OXTF = {
-    version: '0.2'
+    version: '0.3'
 };
 
 /* Styles used. These are injected into DOM automatically. */
@@ -45,6 +45,7 @@ button.oxtf-active {
 
 OXTF.invisibleClassName = 'oxtf-invisible'; // CSS class used to hide content
 OXTF.tagsDataAttribute = 'oxtfTags';        // data attr used for storing resolved tag sets in DOM
+OXTF.filterListId = 'oxtf-filter-list';     // Id of filter list buttons in DOM
 
 /* Collects tags from org-mode exported HTML document.
    
@@ -144,6 +145,24 @@ OXTF.revealMatchingContent = (contentRoot, selectedTags) => {
             .forEach(e => e.classList.remove(OXTF.invisibleClassName));
     };
 
+    const revealAncestorsSparsely = (elem) => {
+        let n = elem.parentNode;
+        while (n && n.nodeType === Node.ELEMENT_NODE) {
+            n.classList.remove(OXTF.invisibleClassName);
+            if (n.firstElementChild
+                && (n.firstElementChild.nodeName === 'A'
+                    || n.firstElementChild.nodeName.match(/H[1-9]/))) {
+                revealSubtree(n.firstElementChild);
+            }
+            n = n.parentNode;
+        }
+    };
+
+    // Take care never to hide filter list buttons, in case they are injected
+    // at a custom place in DOM.
+    revealSubtree(document.getElementById(OXTF.filterListId));
+    revealAncestorsSparsely(document.getElementById(OXTF.filterListId));
+
     const visibleContentTags = new Set();
 
     contentRoot.querySelectorAll('span.tag, span.todo, span.done')
@@ -167,17 +186,8 @@ OXTF.revealMatchingContent = (contentRoot, selectedTags) => {
                     headingSibling = headingSibling.nextElementSibling;
                 }
             }
-            
-            let n = heading.parentNode;
-            while (n && n.nodeType === Node.ELEMENT_NODE) {
-                n.classList.remove(OXTF.invisibleClassName);
-                if (n.firstElementChild
-                    && (n.firstElementChild.nodeName === 'A'
-                        || n.firstElementChild.nodeName.match(/H[1-9]/))) {
-                    revealSubtree(n.firstElementChild);
-                }
-                n = n.parentNode;
-            }
+
+            revealAncestorsSparsely(heading);
         });
 
     return visibleContentTags;
@@ -189,7 +199,7 @@ OXTF.init = (ev) => {
     const documentTagSet = OXTF.collectTags(contentRoot);
 
     const filterList = document.createElement('div');
-    filterList.id = 'oxtf-filter-list';
+    filterList.id = OXTF.filterListId;
 
     Array.from(documentTagSet).sort().forEach(tagText => {
         const button = document.createElement('button');
@@ -217,7 +227,7 @@ OXTF.init = (ev) => {
 
     // Finally hook into live DOM:
     document.getElementsByTagName('head').item(0).append(OXTF.createStyleElement());
-    const existingFilterListPlaceholder = document.getElementById('oxtf-filter-list');
+    const existingFilterListPlaceholder = document.getElementById(OXTF.filterListId);
     if (existingFilterListPlaceholder) {
         existingFilterListPlaceholder.replaceWith(filterList);
     } else if (document.querySelector('header')) {  // HTML5:
