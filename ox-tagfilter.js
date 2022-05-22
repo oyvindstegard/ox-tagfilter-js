@@ -217,7 +217,10 @@ OXTF.init = (ev) => {
 
     // Finally hook into live DOM:
     document.getElementsByTagName('head').item(0).append(OXTF.createStyleElement());
-    if (document.querySelector('header')) {  // HTML5:
+    const existingFilterListPlaceholder = document.getElementById('oxtf-filter-list');
+    if (existingFilterListPlaceholder) {
+        existingFilterListPlaceholder.replaceWith(filterList);
+    } else if (document.querySelector('header')) {  // HTML5:
         document.querySelector('header').append(filterList);
     } else {                                 // XHTML:
         contentRoot.insertBefore(filterList, document.querySelector('h1.title').nextSibling);
