@@ -2,10 +2,13 @@
  * to dynamically filter an org-mode exported HTML document by tags and
  * TODO-keywords, revealing only content that matches the selected items and
  * hiding the rest.
- *
+ * 
  * It filters both a generated table-of-contents (if present) and the content
  * itself.
  * 
+ * Saves selected tags to browser local storage and re-applies the filtering
+ * selection on page (re)load.
+ *
  * Tested with: Org 9.5.3 (Emacs 27.1 and Emacs 28.1)
  * Source code: https://github.com/oyvindstegard/ox-tagfilter-js/
  * Author:      Øyvind Stegard <oyvind@stegard.net>
@@ -14,7 +17,31 @@
 'use strict';
 
 const OXTF = {
-    version: '0.3'
+    version: '0.4'
+};
+
+OXTF.persistence = new function() {
+    const self = this;
+    const db = window.localStorage;
+    const storageKey = 'OXTF_' + (document.location.pathname || "/");
+
+    /* Returns an array of previously stored selected tags. */
+    this.loadSelectedTags = function() {
+        if (!db) {
+            return [];
+        }
+        const dbValue = db.getItem(storageKey);
+        return dbValue ? JSON.parse(dbValue) : [];
+    };
+
+    /* Saves an array of currently selected tags. */
+    this.saveSelectedTags = function(selectedTags) {
+        if (!db) {
+            return;
+        }
+        const dbValue = JSON.stringify(selectedTags);
+        db.setItem(storageKey, dbValue);
+    };
 };
 
 /* Styles used. These are injected into DOM automatically. */
@@ -198,28 +225,44 @@ OXTF.init = (ev) => {
     
     const documentTagSet = OXTF.collectTags(contentRoot);
 
+    const savedSelectedTagSet = OXTF.persistence.loadSelectedTags()
+          .filter(t => documentTagSet.has(t));
+
     const filterList = document.createElement('div');
     filterList.id = OXTF.filterListId;
+
+    const updateFiltering = () => {
+        const listNode = filterList;
+        const selectedTags = new Set(Array.from(listNode.querySelectorAll('button.oxtf-active'))
+                                     .map(e => e.innerText));
+        const visibleContentTags = OXTF.revealMatchingContent(contentRoot, selectedTags);
+        listNode.childNodes.forEach(b => {
+            if (visibleContentTags === null || visibleContentTags.has(b.innerText)) {
+                b.disabled = false;
+            } else {
+                b.disabled = true;
+            }
+        });
+        OXTF.persistence.saveSelectedTags(Array.from(selectedTags));
+    };
 
     Array.from(documentTagSet).sort().forEach(tagText => {
         const button = document.createElement('button');
         button.classList.add('oxtf');
+        if (savedSelectedTagSet.includes(tagText)) {
+            button.classList.add('oxtf-active');
+        }
         button.innerText = tagText;
         
         button.addEventListener('click', (ev) => {
             const buttonNode = ev.target;
             buttonNode.classList.toggle('oxtf-active');
-            const listNode = buttonNode.parentNode;
-            const selectedTags = new Set(Array.from(listNode.querySelectorAll('button.oxtf-active'))
-                                         .map(e => e.innerText));
-            const visibleContentTags = OXTF.revealMatchingContent(contentRoot, selectedTags);
-            listNode.childNodes.forEach(b => {
-                if (visibleContentTags === null || visibleContentTags.has(b.innerText)) {
-                    b.disabled = false;
-                } else {
-                    b.disabled = true;
-                }
-            });
+            updateFiltering();
+            try {
+                filterList.scrollIntoView({block: 'nearest'});
+            } catch (e) {
+                filterList.scrollIntoView();
+            }
         });
         
         filterList.append(button);
@@ -243,9 +286,12 @@ OXTF.init = (ev) => {
                 b.classList.remove('oxtf-active');
                 b.disabled = false;
             });
-            OXTF.revealMatchingContent(contentRoot, new Set());
+            updateFiltering();
         }
     });
+
+    // Initial update of filtering from possibly saved state.
+    updateFiltering();
 };
 
 document.addEventListener('DOMContentLoaded', OXTF.init);
