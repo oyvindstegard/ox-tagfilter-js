@@ -48,7 +48,7 @@ customized by inserting a placeholder `<div>`-tag anywhere you like in the
 exported HTML document. You can include it with an HTML export block such as:
 
     #+BEGIN_EXPORT html
-    <div id='oxtf-filter-list'/>
+    <div id='oxtf-filter-list'></div>
     #+END_EXPORT
 
 The filter buttons will replace that particular element, instead of being
