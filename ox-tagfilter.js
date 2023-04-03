@@ -233,9 +233,20 @@ OXTF.init = (ev) => {
 
     const updateFiltering = () => {
         const listNode = filterList;
-        const selectedTags = new Set(Array.from(listNode.querySelectorAll('button.oxtf-active'))
+        let selectedTags = new Set(Array.from(listNode.querySelectorAll('button.oxtf-active'))
                                      .map(e => e.innerText));
-        const visibleContentTags = OXTF.revealMatchingContent(contentRoot, selectedTags);
+        let visibleContentTags = OXTF.revealMatchingContent(contentRoot, selectedTags);
+
+        // Check for impossible combination of selected filter tags. This can
+        // occur if the persisted set of filter selections is loaded on new/modified
+        // document content initially. In that case, reset.
+        if (visibleContentTags !== null && visibleContentTags.size === 0) {
+            visibleContentTags = OXTF.revealMatchingContent(contentRoot, new Set());
+            selectedTags = new Set();
+            listNode.querySelectorAll('button.oxtf-active').forEach(
+                n => n.classList.remove('oxtf-active'));
+        }
+
         listNode.childNodes.forEach(b => {
             if (visibleContentTags === null || visibleContentTags.has(b.innerText)) {
                 b.disabled = false;
