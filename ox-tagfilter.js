@@ -17,7 +17,7 @@
 'use strict';
 
 const OXTF = {
-    version: '0.4'
+    version: '0.6'
 };
 
 OXTF.persistence = new function() {
@@ -48,7 +48,10 @@ OXTF.persistence = new function() {
 OXTF.createStyleElement = () =>  {
     const styleElem = document.createElement('style');
     styleElem.innerText = `
-#oxtf-filter-list {}
+#oxtf-filter-list {
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+}
 button.oxtf {
   font-family: monospace;
   font-weight: normal;
@@ -59,9 +62,24 @@ button.oxtf {
   border: 1px solid #bbb;
   border-radius: 3px;
 }
+button.oxtf-filter {}
 button.oxtf-active {
   filter: invert(1);
   font-weight: bold !important;
+}
+button#oxtf-clear {
+  border: 2px solid #9C9;
+  font-weight: bold !important;
+  color: #666666;
+}
+button#oxtf-clear:active {
+  filter: invert(1);
+}
+button#oxtf-clear:after {
+  content: " [ESC]";
+  font-weight: normal !important;
+  font-size: 70%;
+  vertical-align: 10%;
 }
 .oxtf-invisible {
   display: none;
@@ -247,7 +265,7 @@ OXTF.init = (ev) => {
                 n => n.classList.remove('oxtf-active'));
         }
 
-        listNode.childNodes.forEach(b => {
+        listNode.querySelectorAll('button.oxtf-filter').forEach(b => {
             if (visibleContentTags === null || visibleContentTags.has(b.innerText)) {
                 b.disabled = false;
             } else {
@@ -257,9 +275,19 @@ OXTF.init = (ev) => {
         OXTF.persistence.saveSelectedTags(Array.from(selectedTags));
     };
 
+    const clearFiltering = () => {
+        filterList.childNodes.forEach(b => {
+            b.classList.remove('oxtf-active');
+            b.disabled = false;
+        });
+        updateFiltering();
+    };
+
+    // Add filtering buttons
     Array.from(documentTagSet).sort().forEach(tagText => {
         const button = document.createElement('button');
         button.classList.add('oxtf');
+        button.classList.add('oxtf-filter');
         if (savedSelectedTagSet.includes(tagText)) {
             button.classList.add('oxtf-active');
         }
@@ -279,6 +307,29 @@ OXTF.init = (ev) => {
         filterList.append(button);
     });
 
+    // Clear filters support
+    if (documentTagSet.size > 0) {
+        const clearFiltersButton = document.createElement('button');
+        clearFiltersButton.id = 'oxtf-clear';
+        clearFiltersButton.classList.add('oxtf');
+        clearFiltersButton.innerText = 'Clear filter';
+        clearFiltersButton.addEventListener('click', (ev) => clearFiltering());
+        filterList.append(clearFiltersButton);
+
+        // Connect an ESC key listener to clear filters button
+        document.addEventListener('keydown', (ev) => {
+            if (ev.keyCode === 27) {
+                clearFiltersButton.classList.add('oxtf-active');
+            }
+        });
+        document.addEventListener('keyup', (ev) => {
+            if (ev.keyCode === 27) {
+                clearFiltersButton.classList.remove('oxtf-active');
+                clearFiltersButton.dispatchEvent(new Event('click'));
+            }
+        });
+    }
+
     // Finally hook into live DOM:
     document.getElementsByTagName('head').item(0).append(OXTF.createStyleElement());
     const existingFilterListPlaceholder = document.getElementById(OXTF.filterListId);
@@ -289,17 +340,6 @@ OXTF.init = (ev) => {
     } else {                                 // XHTML:
         contentRoot.insertBefore(filterList, document.querySelector('h1.title').nextSibling);
     }
-
-    // Add ESC key listener (clear all active tag filters).
-    document.addEventListener('keyup', (ev) => {
-        if (ev.keyCode === 27) {
-            filterList.childNodes.forEach(b => {
-                b.classList.remove('oxtf-active');
-                b.disabled = false;
-            });
-            updateFiltering();
-        }
-    });
 
     // Initial update of filtering from possibly saved state.
     updateFiltering();
