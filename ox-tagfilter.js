@@ -312,7 +312,7 @@ OXTF.init = (ev) => {
         const clearFiltersButton = document.createElement('button');
         clearFiltersButton.id = 'oxtf-clear';
         clearFiltersButton.classList.add('oxtf');
-        clearFiltersButton.innerText = 'Clear filter';
+        clearFiltersButton.innerText = 'Clear';
         clearFiltersButton.addEventListener('click', (ev) => clearFiltering());
         filterList.append(clearFiltersButton);
 
