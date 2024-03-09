@@ -79,7 +79,7 @@ button#oxtf-clear:after {
   content: " [ESC]";
   font-weight: normal !important;
   font-size: 70%;
-  vertical-align: 10%;
+  vertical-align: middle;
 }
 .oxtf-invisible {
   display: none;
