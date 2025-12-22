@@ -1,22 +1,29 @@
 # Dynamic tag filtering in org-mode exported HTML documents
 
-This JavaScript code adds dynamic tag filtering to HTML documents exported from
-Emacs [Org-mode](https://orgmode.org/). It allows to hide/reveal page content
-based on tags and TODO-keywords, which may be useful for larger documents like
-journals, all-in-one notes files, etc. Of course, it will not be useful at all
-if you are not using any tags or TODO-keywords in your org files.
+This JavaScript code adds dynamic tag filtering and heading search to HTML
+documents exported from Emacs [Org-mode](https://orgmode.org/). It allows to
+hide/reveal page content based on tags, TODO-keywords and heading text, which
+may be useful for larger documents like journals, all-in-one notes files, etc.
 
 Author's use case: I have a growing journal of notes which is automatically
 published as HTML to a private web space. When looking back at stuff or looking
-for something specific, I find it useful to be able to filter the page to
-specific content (and hide the rest).
+for something specific, I find it useful to be able to quickly filter the page
+to specific content (and hide the rest).
 
-## Screencast
+## Version 1.0 – now includes a heading search box
+
+- The search box will allow you til filter on heading texts, and it works even
+  if you do not have any tags in your Org documents.
+- Performance improvements, better DOM update strategy.
+
+## Screencast (older version)
 
 <p align="center"><img src="screencast.gif?raw=true" alt="Screencast"/></p>
 
 The CSS for the screencast document can be found here:
 https://sandyuraz.com/blogs/orgmode-css/
+
+TODO update to also show search box, which is new in version 1.0.
 
 ## Usage
 
