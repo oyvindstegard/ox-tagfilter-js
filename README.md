@@ -1,4 +1,4 @@
-# Dynamic tag filtering in org-mode exported HTML documents
+# Dynamic heading filtering in Org-mode exported HTML documents
 
 This JavaScript code adds dynamic tag filtering and heading search to HTML
 documents exported from Emacs [Org-mode](https://orgmode.org/). It allows to
