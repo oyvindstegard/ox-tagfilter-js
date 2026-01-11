@@ -67,11 +67,11 @@ The following HTML documents have been exported from [`test.org`](test.org)
 using Org mode with completely default configuration and only changing the
 doctype settings:
 
-- [test-ox-html5.html](https://htmlpreview.github.io/?https://github.com/oyvindstegard/ox-tagfilter-js/blob/main/test-ox-html5.html)
-- [test-ox-html5-fancy.html](https://htmlpreview.github.io/?https://github.com/oyvindstegard/ox-tagfilter-js/blob/main/test-ox-html5-fancy.html)
-- [test-ox-html5-notoc.html](https://htmlpreview.github.io/?https://github.com/oyvindstegard/ox-tagfilter-js/blob/main/test-ox-html5-notoc.html)
-- [test-ox-xhtml-strict.html](https://htmlpreview.github.io/?https://github.com/oyvindstegard/ox-tagfilter-js/blob/main/test-ox-xhtml-strict.html)
-- [text-ox-html5-existing-placeholder.html](https://htmlpreview.github.io/?https://github.com/oyvindstegard/ox-tagfilter-js/blob/main/text-ox-html5-existing-placeholder.html)
+- [test-ox-html5.html](https://stegard.net/ox-tagfilter-js-preview/test-ox-html5.html)
+- [test-ox-html5-fancy.html](https://stegard.net/ox-tagfilter-js-preview/test-ox-html5-fancy.html)
+- [test-ox-html5-notoc.html](https://stegard.net/ox-tagfilter-js-preview/test-ox-html5-notoc.html)
+- [test-ox-xhtml-strict.html](https://stegard.net/ox-tagfilter-js-preview/test-ox-xhtml-strict.html)
+- [text-ox-html5-existing-placeholder.html](https://stegard.net/ox-tagfilter-js-preview/text-ox-html5-existing-placeholder.html)
 
 ## Compatibility
 
